@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const { model } = require('mongoose/lib/mongoose');
-const type = require('mongoose/lib/schema/operators/type');
 
 const locationSchema = new mongoose.Schema(
     {
@@ -12,9 +10,9 @@ const locationSchema = new mongoose.Schema(
             type: String,
             require: true,
         },
-
+       
     },
-    { timestamps: true},
+    { timestamps: true },
 )
 
-module.exports = mongoose.model('location', locationSchema);
+module.exports = mongoose.model('Location', locationSchema);
