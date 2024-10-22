@@ -1,23 +1,34 @@
-const locationSchema = require('../models/location.model')
+const { response } = require('express');
+const Location = require('../models/Location.model');
 
 const locationController = {
-    getLocations: async (req, res)=>{
-        try{
-            const location = await locationSchema.find()
-            res.status(200).json(location);
-        }catch(err){
-            res.status(500).json({message: err.message});
+    createLocation: async (req, res) => {
+        const newLocation = new Location(req.body);
+        try {
+            const savedLocation = await newLocation.save();
+            res.status(200).json({ savedLocation });
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
         }
     },
-    createLocations: async (req, res)=>{
-        try{
-            const location = new locationSchema(req.body)
-            const saveLocation = await location.save();
-            res.status(200).json(saveLocation);
-        }catch(err){
-            res.status(500).json({message: err.message});
+    getLocations: async (req, res) => {
+        try {
+            const locations = await Location.find();
+            res.status(200).json(locations);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json({ msg: err.message });
         }
     },
+    deleteAllLocation: async (req, res) => {
+        try {
+            const product = await Location.remove();
+            res.status(200).json({message: true, product:product});
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    }
 }
 
 module.exports = locationController;
